@@ -11,8 +11,14 @@
         'point_of_sale',
     ],
     'data': [
-        'wizard/res_config_settings.xml'
+        'views/res_config_settings.xml',
     ],
+
+    'assets': {
+        'point_of_sale._assets_pos': [
+            'pos_category_wise_discount/static/src/pos_discount.js',
+        ],
+    },
 
     'license': 'LGPL-3'
 
