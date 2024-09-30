@@ -6,13 +6,13 @@
         <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <block id="pos_pricing_section" position="inside">
-                    <setting string="Discount limit">
+                    <setting string="Categorywise discount limit">
                         <field name="pos_discount_limit_bool"/>
                     </setting>
                     <div class="content-group" invisible="not pos_discount_limit_bool">
                         <div class="mt16">
                             <group>
-                                <field name="pos_disc_limit" style="width:5rem"/>
+                                <field name="pos_disc_limit" style="width:5rem" widget="monetary"/>
                             </group>
                         </div>
                     </div>
