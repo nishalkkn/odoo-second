@@ -6,7 +6,7 @@ import { ErrorPopup } from "@point_of_sale/app/errors/popups/error_popup";
 patch(Order.prototype, {
     async pay() {
         if (this.pos.config.is_pos_discount_limit) {
-            let dictionary = {}
+            var dictionary = {}
             var discount_limit = this.pos.config.pos_discount_limit
             for (var i = 0; i < this.orderlines.length; i++) {
                 var product_categ_id = this.orderlines[i].product.pos_categ_ids
