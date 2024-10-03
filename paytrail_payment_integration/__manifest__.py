@@ -13,7 +13,10 @@
         'portal',
     ],
     'data': [
-        # 'data/payment_method_data.xml',
+        'views/payment_paytrail_templates.xml',
+        'views/payment_provider_view.xml',
+
+        'data/payment_method_data.xml',
     ],
 
     'license': 'LGPL-3'

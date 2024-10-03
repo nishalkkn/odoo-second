@@ -33,10 +33,9 @@ patch(Order.prototype, {
                     ...super.pay(...arguments)
                 }
             }
-        } else {
-            return {
-                ...super.pay(...arguments)
-            }
+        }
+        return {
+            ...super.pay(...arguments)
         }
     },
 });
