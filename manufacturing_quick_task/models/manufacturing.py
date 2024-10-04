@@ -11,10 +11,11 @@ class ManufacturingQuickTask(models.Model):
 
     def _compute_cost_of_components(self):
         """computing cost of components"""
-        total_cost = 0
-        for rec in self.move_raw_ids:
-            total_cost += (rec.product_id.standard_price * rec.product_uom_qty)
-        self.cost_of_components = total_cost
+        for rec in self:
+            total_cost = 0
+            for val in self.move_raw_ids:
+                total_cost += (val.product_id.standard_price * val.product_uom_qty)
+            rec.cost_of_components = total_cost
 
     def action_create_bill(self):
         """creating bill"""

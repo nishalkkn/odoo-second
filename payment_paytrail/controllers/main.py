@@ -1,3 +1,5 @@
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 import logging
 import pprint
 
@@ -16,7 +18,7 @@ class PaytrailController(http.Controller):
         save_session=False
     )
     def paytrail_return_from_checkout(self, **data):
-        """ Process the notification data sent by Mollie after redirection from checkout.
+        """ Process the notification data sent by paytrail after redirection from checkout.
 
         The route is flagged with `save_session=False` to prevent Odoo from assigning a new session
         to the user if they are redirected to this route with a POST request. Indeed, as the session
@@ -29,6 +31,8 @@ class PaytrailController(http.Controller):
         :param dict data: The notification data (only `id`) and the transaction reference (`ref`)
                           embedded in the return URL
         """
+
+
         _logger.info("handling redirection from Paytrail with data:\n%s", pprint.pformat(data))
         request.env['payment.transaction'].sudo()._handle_notification_data('paytrail', data)
         return request.redirect('/payment/status')
