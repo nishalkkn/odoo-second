@@ -11,7 +11,6 @@ _logger = logging.getLogger(__name__)
 
 class PaytrailController(http.Controller):
     _return_url = '/payment/paytrail/return'
-    _webhook_url = '/payment/paytrail/webhook'
 
     @http.route(
         _return_url, type='http', auth='public', methods=['GET', 'POST'], csrf=False,

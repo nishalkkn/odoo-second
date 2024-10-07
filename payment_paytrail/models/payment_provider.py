@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import base64
 import logging
 import hashlib
 import hmac
@@ -71,7 +70,6 @@ class PaymentProvider(models.Model):
         payload = json.dumps(data, separators=(",", ":"))
         signature = self.calculate_hmac(self, self.paytrail_secret_key, headers, payload)
         headers["signature"] = signature
-
 
         try:
             response = requests.request(method, url, data=payload, headers=headers, timeout=60)

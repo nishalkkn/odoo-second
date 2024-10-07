@@ -13,6 +13,7 @@
 
         'data/payment_method_data.xml',
         'data/payment_provider_data.xml',
+        'data/account_payment_method.xml',
     ],
 
     'license': 'LGPL-3'
