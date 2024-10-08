@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    <template id="sale_order_portal_template" name="Sales Order" inherit_id="portal.portal_sidebar" primary="True">-->
+    <!--        <xpath expr="//div[hasclass('btn-danger')]" position="after">-->
+
+    <!--            <div class="col-sm-auto mt8">-->
+    <!--                <a role="button" class="btn btn-secondary" href="#discussion">-->
+    <!--                    <i class="fa fa-comment"/>-->
+    <!--                    Feedback-->
+    <!--                </a>-->
+    <!--            </div>-->
+
+    <!--        </xpath>-->
+    <!--    </template>-->
+
+<!--    <template id="sale_order_portal_template_inherit" inherit_id="sale.sale_order_portal_template" primary="True">-->
+<!--&lt;!&ndash;        <xpath expr="//div[@class='o_download_pdf']" position="inside">&ndash;&gt;-->
+<!--        <xpath expr="//div[hasclass('o_download_pdf')]" position="inside">-->
+<!--            <div class="flex-grow-1">-->
+<!--                <a class="btn btn-secondary" id="new_button" href="#"-->
+<!--                   title="Demo">-->
+<!--                    <i class="fa fa-comment"/>-->
+<!--                    Demo-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+    <template id="sale_order_portal_template_inherit" inherit_id="sale.sale_order_portal_content" primary="True">
+        <xpath expr="//div[@id='sale_info']" position="inside">
+            <table class="table table-borderless table-sm">
+                        <tbody style="white-space:nowrap" id="sale_info_table">
+                            <tr>
+                                <th t-if="sale_order.state in ['sale', 'cancel']" class="ps-0 pb-0">Order Date:</th>
+                                <th t-else="" class="ps-0 pb-0">Date:</th>
+                                <td class="w-100 pb-0 text-wrap"><span t-field="sale_order.date_order" t-options='{"widget": "date"}'/></td>
+                            </tr>
+                            <tr t-if="sale_order.validity_date">
+                                <th class="ps-0 pb-0">Expiration Date:</th>
+                                <td class="w-100 pb-0 text-wrap"><span t-field="sale_order.validity_date" t-options='{"widget": "date"}'/></td>
+                            </tr>
+                            <tr t-if="sale_order.client_order_ref">
+                                <th class="ps-0 pb-0">Your Reference:</th>
+                                <td class="w-100 pb-0 text-wrap"><span t-field="sale_order.client_order_ref"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+        </xpath>
+    </template>
+
+</odoo>
+
+<!--sale_order_portal_content-->
