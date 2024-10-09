@@ -28,7 +28,7 @@ class PaymentTransaction(models.Model):
         redirect_url = urls.url_join(base_url, '/payment/paytrail/return')
         dt = datetime.datetime.now()
         items = []
-        for line in self.sale_order_ids[0].order_line:
+        for line in self.sale_order_ids.order_line:
             items.append({
                 'unitPrice': int(line.price_total) * 91,
                 'units': line.product_uom_qty,
@@ -36,9 +36,6 @@ class PaymentTransaction(models.Model):
                 'productCode': line.product_template_id.name,
                 'deliveryDate': str(datetime.date.today())
             })
-            line.price_total = int(line.price_total) * 91
-            print('price total : ', line.price_total)
-
         amount = int(processing_values['amount']) * 91
         payload = {
             "stamp": str(dt.timestamp()),
@@ -53,18 +50,18 @@ class PaymentTransaction(models.Model):
                 "cancel": redirect_url
             }
         }
+
         _logger.info("sending '/payments' request for link creation:\n%s", pprint.pformat(payload))
         payment_data = self.provider_id._paytrail_make_request('/payments', data=payload)
-        print("payment_data : ", payment_data)
         self.provider_reference = payment_data.get('transactionId')
         checkout_url = payment_data['href']
         parsed_url = urls.url_parse(checkout_url)
         url_params = urls.url_decode(parsed_url.query)
         return {'api_url': checkout_url, 'url_params': url_params}
 
+
     def _get_tx_from_notification_data(self, provider_code, notification_data):
         """ Override of payment to find the transaction based on Paytrail data.
-
         :param str provider_code: The code of the provider that handled the transaction
         :param dict notification_data: The notification data sent by the provider
         :return: The transaction if found
@@ -86,12 +83,9 @@ class PaymentTransaction(models.Model):
 
     def _process_notification_data(self, notification_data):
         """ Override of payment to process the transaction based on Paytrail data.
-
-        Note: self.ensure_one()
-
         :param dict notification_data: The notification data sent by the provider
-        :return: None
-        """
+        :return: None"""
+
         super()._process_notification_data(notification_data)
         if self.provider_code != 'paytrail':
             return

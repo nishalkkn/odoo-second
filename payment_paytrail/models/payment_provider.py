@@ -1,24 +1,22 @@
 # -*- coding: utf-8 -*-
-
-import logging
+import datetime
 import hashlib
 import hmac
 import json
+import logging
 import pprint
-import datetime
+
 import requests
 from werkzeug import urls
 
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
 
-
 _logger = logging.getLogger(__name__)
 
 
 class PaymentProvider(models.Model):
     _inherit = 'payment.provider'
-
 
     code = fields.Selection(
         selection_add=[('paytrail', 'paytrail')], ondelete={'paytrail': 'set default'}
@@ -36,23 +34,14 @@ class PaymentProvider(models.Model):
 
     def _paytrail_make_request(self, endpoint, data=None, method='POST'):
         """ Make a request at paytrail endpoint.
-
-        Note: self.ensure_one()
-
         :param str endpoint: The endpoint to be reached by the request
         :param dict data: The payload of the request
         :param str method: The HTTP method of the request
         :return The JSON-formatted content of the response
         :rtype: dict
-        :raise: ValidationError if an HTTP error occurs
-        """
-        # print('endpoint', endpoint)
-        # print('self', self)
-        # print('data', data)
-        # print('method', method)
+        :raise: ValidationError if an HTTP error occurs"""
 
         url = urls.url_join('https://services.paytrail.com', endpoint)
-
 
         headers = {
             "checkout-account": "375917",
@@ -62,11 +51,6 @@ class PaymentProvider(models.Model):
             "checkout-timestamp": datetime.date.today().isoformat(),
         }
 
-        checkout_headers = [k for k, v in headers.items() if k.startswith(
-            "checkout-")]
-        checkout_headers.sort()
-        hmac_str = "\n".join(f"{key}:{headers[key]}" for key in checkout_headers)
-        hmac_str += f"\n{data}"
         payload = json.dumps(data, separators=(",", ":"))
         signature = self.calculate_hmac(self, self.paytrail_secret_key, headers, payload)
         headers["signature"] = signature
@@ -91,31 +75,19 @@ class PaymentProvider(models.Model):
             )
         return response.json()
 
-
-
     @staticmethod
     def compute_sha256_hash(message: str, secret: str) -> str:
-
-        # whitespaces that were created during json parsing process must be removed
         hash = hmac.new(secret.encode(), message.encode(), digestmod=hashlib.sha256)
         return hash.hexdigest()
 
     @staticmethod
     def calculate_hmac(self, secret: str, headerParams: dict, body: str = '') -> str:
-
-        # print('headerParams',headerParams)
-        # print('secret',secret)
-        # print('body',body)
-
         data = []
         for key, value in headerParams.items():
             if key.startswith('checkout-'):
                 data.append('{key}:{value}'.format(key=key, value=value))
         data.append(body)
         return self.compute_sha256_hash('\n'.join(data), secret)
-
-
-
 
 # • Merchant ID: 375917
 # • Secret key: SAIPPUAKAUPPIAS
