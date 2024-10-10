@@ -120,4 +120,5 @@
     <menuitem id="machine_management_menu_root" name="Machine management"/>
     <menuitem id="machine_management" action="machine_management_action" parent="machine_management_menu_root"/>
 
+
 </odoo>

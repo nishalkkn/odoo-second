@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <template id="sale_order_portal_content_inherit" inherit_id="sale.sale_order_portal_template">
 
         <xpath expr="//div[@id='quote_content']" position="inside">
@@ -29,16 +28,17 @@
         </xpath>
 
         <xpath expr="//t[@t-set='entries']/div/div/div[hasclass('o_download_pdf')]" position="before">
-                <div class="d-flex gap-1 flex-lg-column flex-xl-row" invisible="sale_order.state != 'sent'">
-                    <div class="flex-grow-1">
-                        <a t-if="sale_order.state == 'sent'" role="button" class="btn btn-primary d-block" data-bs-toggle="modal"
-                           data-bs-target="#modalconfirm" href="#">
-                            <i class="fa fa-check"/>
-                            Confirm
-                        </a>
-                    </div>
+            <div class="d-flex gap-1 flex-lg-column flex-xl-row" invisible="sale_order.state != 'sent'">
+                <div class="flex-grow-1">
+                    <a t-if="sale_order.state == 'sent'" role="button" class="btn btn-primary d-block"
+                       data-bs-toggle="modal"
+                       data-bs-target="#modalconfirm" href="#">
+                        <i class="fa fa-check"/>
+                        Confirm
+                    </a>
                 </div>
+            </div>
         </xpath>
-    </template>
 
+    </template>
 </odoo>
