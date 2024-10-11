@@ -5,13 +5,12 @@ import { useRef, onWillRender, onMounted, Component } from "@odoo/owl";
 import { parseFloat } from "@web/views/fields/parsers";
 
 export class FloatInt extends Component {
-    static template = "float_int_widget.FloatIntField";
+    static template = "float_int_widget.MathField";
     setup() {
-    console.log(this.props.name)
-        this.input = useRef('inputfloatint'),
+        this.input = useRef('inputmathfield'),
         useInputField({
             getValue: () => this.props.record.data[this.props.name] || "",
-            refName: "inputfloatint",
+            refName: "inputmathfield",
             parse: (v) => parseFloat(v),
         });
         onWillRender(() => {
@@ -23,10 +22,10 @@ export class FloatInt extends Component {
     }
     rounded() {
         if (this.input.el) {
-            this.props.record.data[this.props.name] = Math.round(this.input.el.value)
+            this.props.record.data[this.props.name] = Math(this.input.el.value)
         }
     }
 }
 FloatInt.component = FloatInt
-FloatInt.supportedTypes = ["float"]
+//FloatInt.supportedTypes = ["float"]
 registry.category("fields").add("float_int_widget", FloatInt);

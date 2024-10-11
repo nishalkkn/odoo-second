@@ -20,8 +20,10 @@ This module will allow to convert the float value given into its nearest int val
         {
             'web.assets_backend':
                 {
-                    'float_int_widget/static/src/js/float_int.js',
-                    'float_int_widget/static/src/xml/float_int.xml',
+                    # 'float_int_widget/static/src/js/float_int.js',
+                    # 'float_int_widget/static/src/xml/float_int.xml',
+                    'float_int_widget/static/src/xml/math_field.js',
+                    'float_int_widget/static/src/xml/math_field.xml',
                 },
         },
 
